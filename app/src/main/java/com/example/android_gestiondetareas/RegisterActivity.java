@@ -1,5 +1,6 @@
 package com.example.android_gestiondetareas;
 
+import android.content.Intent; // Import necesario para iniciar la actividad
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,7 +16,7 @@ import com.example.android_gestiondetareas.Data.UsuariosDbHelper;
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText nombreEditText, apellidosEditText, emailEditText, contraseñaEditText, confirmarContraseñaEditText;
-    private Button registrarButton;
+    private Button registrarButton, volverButton; // Agregamos el botón de "Volver"
     private UsuariosDbHelper dbHelper;
 
     @Override
@@ -30,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
         contraseñaEditText = findViewById(R.id.contraseña);
         confirmarContraseñaEditText = findViewById(R.id.confirmarContraseña);
         registrarButton = findViewById(R.id.buttonRegistrar);
+        volverButton = findViewById(R.id.buttonVolver); // Inicializar el botón de "Volver"
 
         // Inicializar el DbHelper
         dbHelper = new UsuariosDbHelper(this);
@@ -39,6 +41,15 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 registrarUsuario();
+            }
+        });
+
+        // Configurar el botón de "Volver" para llevar a MainActivity
+        volverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(intent); // Inicia la actividad principal (MainActivity)
             }
         });
     }

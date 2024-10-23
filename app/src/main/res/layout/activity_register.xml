@@ -99,7 +99,7 @@
         android:layout_height="48dp"
         android:layout_marginStart="100dp"
         android:layout_marginTop="20dp"
-        android:text="Registrase"
+        android:text="Registrarse"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/confirmarContraseña" />
 

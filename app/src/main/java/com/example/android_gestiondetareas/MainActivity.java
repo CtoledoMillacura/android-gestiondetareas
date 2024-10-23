@@ -7,9 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.android_gestiondetareas.Data.UsuariosDbHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         // Inicializar el DbHelper
         dbHelper = new UsuariosDbHelper(this);
 
-        // Set click listener for login button
+        // Listener para el botón de inicio de sesión
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,25 +43,27 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Validar si hay usuarios registrados en la base de datos
+                // Validar si hay usuarios registrados
                 if (dbHelper.hayUsuariosRegistrados()) {
                     // Verificar si las credenciales son correctas
                     if (dbHelper.loginUsuario(email, contraseña)) {
-                        // Credenciales correctas, navegar a la actividad principal
+                        // Obtener el nombre del usuario
+                        String nombreUsuario = dbHelper.obtenerNombreDeUsuario(email);
+
+                        // Navegar a PrincipalActivity con el nombre del usuario
                         Intent loginIntent = new Intent(MainActivity.this, PrincipalActivity.class);
+                        loginIntent.putExtra("nombreUsuario", nombreUsuario);
                         startActivity(loginIntent);
                     } else {
-                        // Mostrar error de credenciales
                         Toast.makeText(MainActivity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    // No hay usuarios registrados
                     Toast.makeText(MainActivity.this, "No hay usuarios registrados. Por favor regístrate.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        // Set click listener for register button
+        // Listener para el botón de registro
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

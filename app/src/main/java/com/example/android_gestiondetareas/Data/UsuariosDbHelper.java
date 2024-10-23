@@ -125,4 +125,35 @@ public class UsuariosDbHelper extends SQLiteOpenHelper {
         }
         cursor.close();
     }
+
+
+    // Método para obtener el nombre del usuario por email
+    public String obtenerNombreDeUsuario(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                UsuariosContract.UsuarioEntry.COLUMN_NAME_NOMBRE
+        };
+
+        String selection = UsuariosContract.UsuarioEntry.COLUMN_NAME_EMAIL + " = ?";
+        String[] selectionArgs = { email };
+
+        Cursor cursor = db.query(
+                UsuariosContract.UsuarioEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        String nombreUsuario = null;
+        if (cursor.moveToFirst()) {
+            nombreUsuario = cursor.getString(cursor.getColumnIndexOrThrow(UsuariosContract.UsuarioEntry.COLUMN_NAME_NOMBRE));
+        }
+        cursor.close();
+
+        return nombreUsuario;
+    }
 }
